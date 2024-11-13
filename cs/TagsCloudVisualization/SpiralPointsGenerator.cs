@@ -1,13 +1,14 @@
+using System.Collections;
 using System.Drawing;
 
 namespace TagsCloudVisualization;
 
-public class DefaultPointsDistributor : IPointsDistributor
+public class SpiralPointsGenerator : IPointsGenerator
 {
     private readonly double angleOffset;
     private readonly double radius;
 
-    public DefaultPointsDistributor(double radius, double angleOffset)
+    public SpiralPointsGenerator(double radius, double angleOffset)
     {
         if (radius <= 0)
             throw new ArgumentException("radius must be greater than 0");
@@ -18,7 +19,7 @@ public class DefaultPointsDistributor : IPointsDistributor
         this.radius = radius;
     }
 
-    public IEnumerable<Point> DistributePoints(Point start)
+    public IEnumerable<Point> GeneratePoints(Point start)
     {
         var angle = 0d;
 

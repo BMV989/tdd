@@ -5,8 +5,8 @@ using TagsCloudVisualization;
 namespace TagsCloudVisualizationTests;
 
 [TestFixture]
-[TestOf(typeof(DefaultPointsDistributor))]
-public class DefaultPointsDistributorTest
+[TestOf(typeof(SpiralPointsGenerator))]
+public class SpiralPointsGeneratorTest
 {
     private const string RadiusErrorMessage = "radius must be greater than 0";
     private const string AngleOffsetErrorMessage = "angleOffset must be greater than 0";
@@ -15,15 +15,15 @@ public class DefaultPointsDistributorTest
     [TestCase(0, 3, RadiusErrorMessage, TestName = "radius is zero")]
     [TestCase(5, -11, AngleOffsetErrorMessage, TestName = "angleOffset is negative")]
     [TestCase(100, 0, AngleOffsetErrorMessage, TestName = "angleOffset is zero")]
-    public void DefaultPointsDistributor_ShouldThrowArgumentException_WithInvalidParams(double radius,
+    public void SpiralPointsGenerator_ShouldThrowArgumentException_WithInvalidParams(double radius,
         double angleOffset, string msg)
     {
-        Action act = () => new DefaultPointsDistributor(radius, angleOffset);
+        Action act = () => new SpiralPointsGenerator(radius, angleOffset);
 
         act.Should().Throw<ArgumentException>().WithMessage(msg);
     }
 
-    public static TestCaseData[] DistributePointsTestCases =
+    public static TestCaseData[] GeneratePointsTestCases =
     {
         new TestCaseData(1, 125, 0).Returns(new Point(0, 0)),
         new TestCaseData(10, 125, 1).Returns(new Point(-2, 3)),
@@ -37,22 +37,18 @@ public class DefaultPointsDistributorTest
         new TestCaseData(20, 15, 3).Returns(new Point(2, 2)),
     };
 
-    [TestCaseSource(nameof(DistributePointsTestCases))]
+    [TestCaseSource(nameof(GeneratePointsTestCases))]
     public Point DistributePoints_ShouldReturnValidPoints_WithValidParams(double radius, double angleOffset,
         int pointsToSkip)
     {
-        var PointsDistributor = new DefaultPointsDistributor(radius, angleOffset);
+        var PointsGenerator = new SpiralPointsGenerator(radius, angleOffset);
         var startPoint = new Point(0, 0);
 
-        var actualPoint = PointsDistributor
-            .DistributePoints(startPoint)
+        var actualPoint = PointsGenerator
+            .GeneratePoints(startPoint)
             .Skip(pointsToSkip)
             .First();
 
         return actualPoint;
-
-
     }
-    
-    
 }

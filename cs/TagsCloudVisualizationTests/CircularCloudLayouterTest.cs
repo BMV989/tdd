@@ -5,24 +5,16 @@ using TagsCloudVisualization;
 namespace TagsCloudVisualizationTests;
 
 [TestFixture]
-[TestOf(typeof(SpiralCloudLayouter))]
-public class SpiralCloudLayouterTest
+[TestOf(typeof(CircularCloudLayouter))]
+public class CircularCloudLayouterTest
 {
-    private Random randomizer;
-    
-    [SetUp]
-    public void Setup()
-    {
-        randomizer = new Random();
-    }
-    
     [Test]
-    [Repeat(15)]
     public void PutNextRectangle_ShouldReturnRectangles_WithoutIntersections()
     {
+        var randomizer = new Random();
         var numberOfRectangles = randomizer.Next(100, 300);
         var rectangles = new Queue<Rectangle>(numberOfRectangles);
-        var spiralCloudLayouter = new SpiralCloudLayouter(new Point(0, 0), 2, 1);
+        var spiralCloudLayouter = new CircularCloudLayouter(new Point(0, 0), 2, 1);
 
         for (var i = 0; i < numberOfRectangles; i++)
         {

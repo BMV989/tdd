@@ -2,15 +2,15 @@
 
 namespace TagsCloudVisualization;
 
-public class SpiralCloudLayouter : ICloudLayouter
+public class CircularCloudLayouter : ICloudLayouter
 {
     private readonly IEnumerator<Point> pointEnumerator;
     private readonly List<Rectangle> rectangles = new List<Rectangle>();
     
-    public SpiralCloudLayouter(Point center, double radius, double angleOffset)
+    public CircularCloudLayouter(Point center, double radius, double angleOffset)
     {
-        pointEnumerator = new DefaultPointsDistributor(radius, angleOffset)
-            .DistributePoints(center)
+        pointEnumerator = new SpiralPointsGenerator(radius, angleOffset)
+            .GeneratePoints(center)
             .GetEnumerator();
     }
 
@@ -22,7 +22,7 @@ public class SpiralCloudLayouter : ICloudLayouter
         {
             pointEnumerator.MoveNext();
             var rectanglePosition = pointEnumerator.Current;
-            rectangle = CreateRectangleWithCenterAndSize(rectanglePosition, rectangleSize);
+            rectangle = CreateRectangle(rectanglePosition, rectangleSize);
 
             if (!rectangles.Any(rectangle.IntersectsWith)) break;
         }
@@ -32,7 +32,7 @@ public class SpiralCloudLayouter : ICloudLayouter
         return rectangle;
     }
 
-    private static Rectangle CreateRectangleWithCenterAndSize(Point center, Size rectangleSize) =>
+    private static Rectangle CreateRectangle(Point center, Size rectangleSize) =>
         new Rectangle(
             center.X - rectangleSize.Width / 2,
             center.Y - rectangleSize.Height / 2,

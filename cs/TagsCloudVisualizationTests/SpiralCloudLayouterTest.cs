@@ -5,17 +5,44 @@ using TagsCloudVisualization;
 namespace TagsCloudVisualizationTests;
 
 [TestFixture]
+[TestOf(typeof(SpiralCloudLayouter))]
 public class SpiralCloudLayouterTest
 {
-    [TestCase(0, 0)]
-    [TestCase(-5, 2)]
-    [TestCase(3, -2)]
-    [TestCase(-5, -1)]
-    [TestCase(20000, 10000)]
-    public void SpiralCloudLayouter_ShouldHaveCenter_AtGivenPoint(int x, int y)
+    private Random randomizer;
+    
+    [SetUp]
+    public void Setup()
     {
-        var layouter = new SpiralCloudLayouter(new Point(x, y));
+        randomizer = new Random();
+    }
+    
+    [Test]
+    [Repeat(15)]
+    public void PutNextRectangle_ShouldReturnRectangles_WithoutIntersections()
+    {
+        var numberOfRectangles = randomizer.Next(100, 300);
+        var rectangles = new Queue<Rectangle>(numberOfRectangles);
+        var spiralCloudLayouter = new SpiralCloudLayouter(new Point(0, 0), 2, 1);
+
+        for (var i = 0; i < numberOfRectangles; i++)
+        {
+            var size = new Size(randomizer.Next(10, 27), randomizer.Next(10, 27));
+            
+            rectangles.Enqueue(spiralCloudLayouter.PutNextRectangle(size));
+        }
+
+        IsIntersectionBetweenRectangles(rectangles).Should().BeFalse();
+    }
+
+    private static bool IsIntersectionBetweenRectangles(Queue<Rectangle> rectangles)
+    {
+        while (rectangles.Count > 0)
+        {
+            var rectangle = rectangles.Dequeue();
+            
+            if (rectangles.Any(rectangle.IntersectsWith)) return true;
+        }
         
-        layouter.Center.Should().BeEquivalentTo(new Point(x, y));
+        return false;
     }
 }

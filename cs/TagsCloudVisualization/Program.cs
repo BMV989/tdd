@@ -25,9 +25,8 @@ class Program
         
         var visualizer = new Visualizer(ImageWidth, ImageHeight);
         var bitmap = visualizer.VisualizeTagCloud(rectangles);
-        Directory.CreateDirectory(ImageDirectory);
 
-        using var file = File.OpenWrite(Path.Combine(ImageDirectory, $"{NumberOfRectangles}_TagCloud.png"));
-        bitmap.Encode(SKEncodedImageFormat.Png, 80).SaveTo(file);
+        var saver = new Saver(ImageDirectory);
+        saver.SaveAsPng(bitmap, $"{NumberOfRectangles}_TagCloud.png");
     }
 }

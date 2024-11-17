@@ -47,7 +47,7 @@ public class CircularCloudLayouterTest
     [Test]
     public void PutNextRectangle_ShouldReturnRectangles_WithoutIntersections()
     {
-        var circularCloudLayouter = CreateCircularCloudLayouterWithOptimalParams();
+        var circularCloudLayouter = CreateCircularCloudLayouterWithRandomParams();
         var numberOfRectangles = randomizer.Next(100, 300);
         
         var rectangles = Enumerable
@@ -63,8 +63,8 @@ public class CircularCloudLayouterTest
     public void GeneratedLayout_ShouldHaveHighTightnessAndShapeOfCircularCloud_WithOptimalParams()
     {
         const double eps = 0.35;
-        var circularLayouter = CreateCircularCloudLayouterWithOptimalParams();
-        var rectangles = PutRandomRectanglesInLayouter(randomizer.Next(500, 1000), circularLayouter);
+        var circularCloudLayouter = CreateCircularCloudLayouterWithOptimalParams();
+        var rectangles = PutRandomRectanglesInLayouter(randomizer.Next(500, 1000), circularCloudLayouter);
         var layoutSize = GetLayoutSize(rectangles);
         
         var diameterOfCircle = Math.Max(layoutSize.Width, layoutSize.Height);

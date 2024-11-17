@@ -2,21 +2,22 @@
 
 namespace TagsCloudVisualization;
 
-public class CircularCloudLayouter : ICloudLayouter
+public class CircularCloudLayouter(Point center, IPointsGenerator pointsGenerator) : ICloudLayouter
 {
-    private readonly IPointsGenerator pointsGenerator;
     private readonly List<Rectangle> rectangles = new ();
     
-    public List<Rectangle> Rectangles => rectangles;
+    public Point Center => center;
     
-    public CircularCloudLayouter(Point center)
-    { 
-        pointsGenerator = new SpiralPointsGenerator(center, 1d, 0.5d);
+    public CircularCloudLayouter(Point center) : 
+        this(center, new SpiralPointsGenerator(center, 1d, 0.5d))
+    {
+        
     }
     
-    public CircularCloudLayouter(Point center, double radius, double angleOffset)
+    public CircularCloudLayouter(Point center, double radius, double angleOffset) :
+        this(center, new SpiralPointsGenerator(center, radius, angleOffset))
     { 
-        pointsGenerator = new SpiralPointsGenerator(center, radius, angleOffset); 
+        
     }
     
     public Rectangle PutNextRectangle(Size rectangleSize)

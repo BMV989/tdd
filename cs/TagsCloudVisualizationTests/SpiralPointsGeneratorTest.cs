@@ -23,4 +23,21 @@ public class SpiralPointsGeneratorTest
 
         act.Should().Throw<ArgumentException>().WithMessage(msg);
     }
+
+    [Test]
+    public void SpiralPointsGenerator_ShouldReturnExactListOfFiveFirstPoints_WithSpecialParams()
+    {
+        var spiralPointsGenerator = new SpiralPointsGenerator(new Point(0, 0), 2, 360);
+        var expectedListOfPoints = new List<Point>
+                {
+                    new(0, 0), new(2, 0), new(4, 0), new(6, 0), new(8, 0)
+                };
+        
+        var actualListOfPoints = Enumerable
+            .Range(0, 5)
+            .Select(_ => spiralPointsGenerator.GetNextPoint())
+            .ToList();
+        
+        actualListOfPoints.Should().BeEquivalentTo(expectedListOfPoints);
+    }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Drawing;
 
 namespace TagsCloudVisualization;
@@ -7,8 +6,10 @@ public class SpiralPointsGenerator : IPointsGenerator
 {
     private readonly double angleOffset;
     private readonly double radius;
+    private readonly Point start;
+    private double angle;
 
-    public SpiralPointsGenerator(double radius, double angleOffset)
+    public SpiralPointsGenerator(Point start, double radius, double angleOffset)
     {
         if (radius <= 0)
             throw new ArgumentException("radius must be greater than 0");
@@ -17,26 +18,23 @@ public class SpiralPointsGenerator : IPointsGenerator
         
         this.angleOffset = angleOffset * Math.PI / 180;
         this.radius = radius;
+        this.start = start;
     }
 
-    public IEnumerable<Point> GeneratePoints(Point start)
+    public Point GetNextPoint()
     {
-        var angle = 0d;
-
-        while (true)
-        {
-            yield return GetPointByPolarCords(start, angle);
-            angle += angleOffset;
-        }
+        var nextPoint = GetPointByPolarCords();
+        angle += angleOffset;
+        return nextPoint;
     }
 
-    private Point GetPointByPolarCords(Point point, double angle)
+    private Point GetPointByPolarCords()
     {
         var offsetPerRadian = radius / (2 * Math.PI);
         var radiusVector =  offsetPerRadian * angle;
         
-        var x = (int)Math.Round(radiusVector * Math.Cos(angle) + point.X);
-        var y = (int)Math.Round(radiusVector * Math.Sin(angle) + point.Y);
+        var x = (int)Math.Round(radiusVector * Math.Cos(angle) + start.X);
+        var y = (int)Math.Round(radiusVector * Math.Sin(angle) + start.Y);
 
         return new Point(x, y);
     }

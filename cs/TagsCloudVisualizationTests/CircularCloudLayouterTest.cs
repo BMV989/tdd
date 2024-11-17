@@ -13,28 +13,17 @@ public class CircularCloudLayouterTest
     {
         var randomizer = new Random();
         var numberOfRectangles = randomizer.Next(100, 300);
-        var rectangles = new Queue<Rectangle>(numberOfRectangles);
-        var spiralCloudLayouter = new CircularCloudLayouter(new Point(0, 0), 2, 1);
+        var rectangles = new List<Rectangle>(numberOfRectangles);
+        var circularCloudLayouter = new CircularCloudLayouter(new Point(0, 0), 2, 1);
 
         for (var i = 0; i < numberOfRectangles; i++)
         {
             var size = new Size(randomizer.Next(10, 27), randomizer.Next(10, 27));
             
-            rectangles.Enqueue(spiralCloudLayouter.PutNextRectangle(size));
+            rectangles.Add(circularCloudLayouter.PutNextRectangle(size));
         }
 
-        IsIntersectionBetweenRectangles(rectangles).Should().BeFalse();
-    }
-
-    private static bool IsIntersectionBetweenRectangles(Queue<Rectangle> rectangles)
-    {
-        while (rectangles.Count > 0)
-        {
-            var rectangle = rectangles.Dequeue();
-            
-            if (rectangles.Any(rectangle.IntersectsWith)) return true;
-        }
-        
-        return false;
+        rectangles.Any(fr => rectangles.Any(sr => fr != sr && fr.IntersectsWith(sr)))
+            .Should().BeFalse();
     }
 }

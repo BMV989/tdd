@@ -7,6 +7,7 @@ public class CircularCloudLayouter(Point center, IPointsGenerator pointsGenerato
     private readonly List<Rectangle> rectangles = new();
     
     public Point Center => center;
+    public IEnumerable<Rectangle> Rectangles => rectangles;
     
     public CircularCloudLayouter(Point center) : 
         this(center, new SpiralPointsGenerator(center, 1d, 0.5d))

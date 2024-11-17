@@ -13,10 +13,10 @@ public class CircularCloudLayouterTest
     [Test]
     public void PutNextRectangle_ShouldReturnRectangle()
     {
-        var circularLayouter = CreateCircularCloudLayouterWithRandomParams();
+        var circularCloudLayouter = CreateCircularCloudLayouterWithRandomParams();
         var rectSize = randomizer.RandomSize(1, int.MaxValue);
         
-        var rect = circularLayouter.PutNextRectangle(rectSize);
+        var rect = circularCloudLayouter.PutNextRectangle(rectSize);
 
         rect.Should().BeOfType<Rectangle>();
     }
@@ -24,11 +24,11 @@ public class CircularCloudLayouterTest
     [Test]
     public void PutNextRectangle_ShouldReturnRectangleAtCenter_WhenFirstInvoked()
     {
-        var circularLayouter = CreateCircularCloudLayouterWithRandomParams();
+        var circularCloudLayouter = CreateCircularCloudLayouterWithRandomParams();
         var rectSize = randomizer.RandomSize(1, int.MaxValue);
         
-        var actualRect = circularLayouter.PutNextRectangle(rectSize);
-        var expectedRect = CircularCloudLayouter.CreateRectangle(circularLayouter.Center, rectSize);
+        var actualRect = circularCloudLayouter.PutNextRectangle(rectSize);
+        var expectedRect = CircularCloudLayouter.CreateRectangle(circularCloudLayouter.Center, rectSize);
         
         actualRect.Should().BeEquivalentTo(expectedRect);
     }
@@ -36,10 +36,10 @@ public class CircularCloudLayouterTest
     [Test]
     public void PutNextRectangle_ShouldReturnRectangle_WithCorrectSize()
     {
-        var circularLayouter = CreateCircularCloudLayouterWithRandomParams();
+        var circularCloudLayouter = CreateCircularCloudLayouterWithRandomParams();
         var recSize = randomizer.RandomSize(1, int.MaxValue);
         
-        var actualRect = circularLayouter.PutNextRectangle(recSize);
+        var actualRect = circularCloudLayouter.PutNextRectangle(recSize);
         
         actualRect.Size.Should().Be(recSize);
     }

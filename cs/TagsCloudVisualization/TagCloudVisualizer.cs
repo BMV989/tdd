@@ -37,6 +37,6 @@ public class TagCloudVisualizer(int width, int height)
         var layoutWidth = rectangles.Max(r => r.Right) - rectangles.Min(r => r.Left);
         var layoutHeight = rectangles.Max(r => r.Top) - rectangles.Min(r => r.Bottom);
         
-        return new SKSizeI((int)layoutWidth, (int)layoutHeight);
+        return new SKSize(layoutWidth, layoutHeight).ToSizeI();
     }
 }

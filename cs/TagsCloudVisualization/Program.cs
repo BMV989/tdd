@@ -14,7 +14,7 @@ class Program
     private const string ImageDirectory = "../../../imgs";
     public static void Main(string[] args)
     {
-        var center = new SKPoint((float)ImageWidth / 2, (float)ImageHeight / 2);
+        var center = new SKPoint(ImageWidth / 2f, ImageHeight / 2f);
         var cloudLayouter = new CircularCloudLayouter(center);
         var rectangles = Enumerable
             .Range(0, NumberOfRectangles)

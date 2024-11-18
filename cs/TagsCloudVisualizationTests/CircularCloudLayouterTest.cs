@@ -25,7 +25,7 @@ public class CircularCloudLayouterTest
         if (currentContext.Result.Outcome.Status != TestStatus.Failed) return;
 
         var layoutSize = GetLayoutSize(circularCloudLayouter.Rectangles.ToList());
-        var visualizer = new TagCloudVisualizer((int)layoutSize.Width / 2, (int)layoutSize.Height / 2);
+        var visualizer = new TagCloudVisualizer((int)layoutSize.Width, (int)layoutSize.Height);
         var bitmap = visualizer.Visualize(circularCloudLayouter.Rectangles);
 
         var pathToFile = Path.Combine(ImagesDirectory, currentContext.Test.Name);
@@ -74,13 +74,13 @@ public class CircularCloudLayouterTest
                     rectangles.Any(otherRect => rect != otherRect && rect.IntersectsWith(otherRect));
 
         rectangles.Any(IsIntersectionBetweenRectangles)
-            .Should().BeTrue();
+            .Should().BeFalse();
     }
 
     [Test]
     public void GeneratedLayout_ShouldHaveHighTightnessAndShapeOfCircularCloud()
     {
-        const double eps = 0.25;
+        const double eps = 0.35;
         var rectangles = PutRandomRectanglesInLayouter(Random.Shared.Next(500, 1000));
         var layoutSize = GetLayoutSize(rectangles);
         

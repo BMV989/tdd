@@ -1,4 +1,3 @@
-using System.Drawing;
 using SkiaSharp;
 
 namespace TagsCloudVisualization;
@@ -17,11 +16,10 @@ class Program
     {
         var center = new SKPoint((float)ImageWidth / 2, (float)ImageHeight / 2);
         var cloudLayouter = new CircularCloudLayouter(center);
-        var randomizer = new Random();
         var rectangles = Enumerable
             .Range(0, NumberOfRectangles)
             .Select(_ => 
-                cloudLayouter.PutNextRectangle(randomizer.NextSkSize(MinRectangleSize, MaxRectangleSize)));
+                cloudLayouter.PutNextRectangle(Random.Shared.NextSkSize(MinRectangleSize, MaxRectangleSize)));
         
         var visualizer = new TagCloudVisualizer(ImageWidth, ImageHeight);
         var bitmap = visualizer.Visualize(rectangles);

@@ -10,13 +10,12 @@ namespace TagsCloudVisualizationTests;
 public class CircularCloudLayouterTest
 {
     private const string ImagesDirectory = "../../../failedTests";
-    private readonly Random randomizer = new();
     private CircularCloudLayouter circularCloudLayouter;
 
     [SetUp]
     public void Setup()
     {
-        circularCloudLayouter = new CircularCloudLayouter(randomizer.NextSkPoint(-10, 10));
+        circularCloudLayouter = new CircularCloudLayouter(Random.Shared.NextSkPoint(-10, 10));
     }
 
     [TearDown]
@@ -39,7 +38,7 @@ public class CircularCloudLayouterTest
     [Test]
     public void PutNextRectangle_ShouldReturnRectangleAtCenter_WhenFirstInvoked()
     {
-        var rectSize = randomizer.NextSkSize(1, int.MaxValue);
+        var rectSize = Random.Shared.NextSkSize(1, int.MaxValue);
         
         var actualRect = circularCloudLayouter.PutNextRectangle(rectSize);
         var expectedRect = CircularCloudLayouter.CreateRectangleWithCenter(circularCloudLayouter.Center, rectSize);
@@ -50,7 +49,7 @@ public class CircularCloudLayouterTest
     [Test]
     public void PutNextRectangle_ShouldReturnRectangle_WithCorrectSize()
     {
-        var rectangleSize = randomizer.NextSkSize(1, int.MaxValue);
+        var rectangleSize = Random.Shared.NextSkSize(1, int.MaxValue);
         
         var actualRectangle = circularCloudLayouter.PutNextRectangle(rectangleSize);
         
@@ -60,11 +59,11 @@ public class CircularCloudLayouterTest
     [Test]
     public void PutNextRectangle_ShouldReturnRectangles_WithoutIntersections()
     {
-        var numberOfRectangles = randomizer.Next(100, 300);
+        var numberOfRectangles = Random.Shared.Next(100, 300);
         
         var rectangles = Enumerable
             .Range(0, numberOfRectangles)
-            .Select(_ => circularCloudLayouter.PutNextRectangle(randomizer.NextSkSize(10, 27)))
+            .Select(_ => circularCloudLayouter.PutNextRectangle(Random.Shared.NextSkSize(10, 27)))
             .ToList();
 
         bool IsIntersectionBetweenRectangles(SKRect rect) => 
@@ -78,7 +77,7 @@ public class CircularCloudLayouterTest
     public void GeneratedLayout_ShouldHaveHighTightnessAndShapeOfCircularCloud()
     {
         const double eps = 0.35;
-        var rectangles = PutRandomRectanglesInLayouter(randomizer.Next(500, 1000));
+        var rectangles = PutRandomRectanglesInLayouter(Random.Shared.Next(500, 1000));
         var layoutSize = GetLayoutSize(rectangles);
         
         var diameterOfCircle = Math.Max(layoutSize.Width, layoutSize.Height);
@@ -94,7 +93,7 @@ public class CircularCloudLayouterTest
     private List<SKRect> PutRandomRectanglesInLayouter(int numberOfRectangles) =>
         Enumerable
             .Range(0, numberOfRectangles)
-            .Select(_ => circularCloudLayouter.PutNextRectangle(randomizer.NextSkSize(10, 27)))
+            .Select(_ => circularCloudLayouter.PutNextRectangle(Random.Shared.NextSkSize(10, 27)))
             .ToList();
 
     private SKSize GetLayoutSize(List<SKRect> rectangles)

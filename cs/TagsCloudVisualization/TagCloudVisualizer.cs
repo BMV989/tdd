@@ -5,19 +5,13 @@ using SkiaSharp.Views.Desktop;
 
 namespace TagsCloudVisualization;
 
-public class Visualizer
+public class TagCloudVisualizer(int width, int height)
 {
-    private readonly SKBitmap bitmap;
-    private readonly SKCanvas canvas;
+    private readonly SKBitmap bitmap = new(width, height);
 
-    public Visualizer(int width, int height)
+    public SKBitmap Visualize(IEnumerable<Rectangle> rectangles)
     {
-        bitmap = new SKBitmap(width, height);
-        canvas = new SKCanvas(bitmap);
-    }
-
-    public SKBitmap VisualizeTagCloud(IEnumerable<Rectangle> rectangles)
-    {
+        var canvas = new SKCanvas(bitmap);
         var paint = new SKPaint 
         { 
             Color = SKColors.White,

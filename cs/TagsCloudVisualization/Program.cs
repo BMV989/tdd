@@ -23,8 +23,8 @@ class Program
             .Select(_ => 
                 cloudLayouter.PutNextRectangle(randomizer.NextSize(MinRectangleSize, MaxRectangleSize)));
         
-        var visualizer = new Visualizer(ImageWidth, ImageHeight);
-        var bitmap = visualizer.VisualizeTagCloud(rectangles);
+        var visualizer = new TagCloudVisualizer(ImageWidth, ImageHeight);
+        var bitmap = visualizer.Visualize(rectangles);
 
         var saver = new Saver(ImageDirectory);
         saver.SaveAsPng(bitmap, $"{NumberOfRectangles}_TagCloud.png");

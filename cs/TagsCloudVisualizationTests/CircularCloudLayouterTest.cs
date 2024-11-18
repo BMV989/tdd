@@ -27,8 +27,8 @@ public class CircularCloudLayouterTest
         if (currentContext.Result.Outcome.Status != TestStatus.Failed) return;
 
         var layoutSize = GetLayoutSize(circularCloudLayouter.Rectangles.ToList());
-        var visualizer = new Visualizer(layoutSize.Width, layoutSize.Height);
-        var bitmap = visualizer.VisualizeTagCloud(circularCloudLayouter.Rectangles);
+        var visualizer = new TagCloudVisualizer(layoutSize.Width, layoutSize.Height);
+        var bitmap = visualizer.Visualize(circularCloudLayouter.Rectangles);
 
         var saver = new Saver(ImagesDirectory);
         var filename = $"{currentContext.Test.Name}.png";

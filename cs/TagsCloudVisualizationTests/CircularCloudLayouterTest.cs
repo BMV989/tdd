@@ -31,7 +31,7 @@ public class CircularCloudLayouterTest
         var pathToFile = Path.Combine(ImagesDirectory, currentContext.Test.Name);
         TagCloudSaver.SaveAsPng(bitmap, pathToFile);
         
-        TestContext.Out.WriteLine($"Tag cloud visualization saved to file {pathToFile}");
+        TestContext.Out.WriteLine($"Tag cloud visualization saved to file {pathToFile}.png");
     }
 
     [Test]
@@ -80,7 +80,7 @@ public class CircularCloudLayouterTest
     [Test]
     public void GeneratedLayout_ShouldHaveHighTightnessAndShapeOfCircularCloud()
     {
-        const double eps = 0.35;
+        const double eps = 0.25;
         var rectangles = PutRandomRectanglesInLayouter(Random.Shared.Next(500, 1000));
         var layoutSize = GetLayoutSize(rectangles);
         

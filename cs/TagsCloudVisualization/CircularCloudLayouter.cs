@@ -34,7 +34,6 @@ public class CircularCloudLayouter(SKPoint center) : ICloudLayouter
         var top = center.Y - rectangleSize.Height / 2;
         
         return new SKRect(left, top, left + rectangleSize.Width, top + rectangleSize.Height);
-        
     }
 }
 

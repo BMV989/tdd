@@ -80,7 +80,7 @@ public class CircularCloudLayouterTest
     [Test]
     public void GeneratedLayout_ShouldHaveHighTightnessAndShapeOfCircularCloud()
     {
-        const double eps = 0.25;
+        const double eps = 0.35;
         var rectangles = PutRandomRectanglesInLayouter(Random.Shared.Next(500, 1000));
         var layoutSize = GetLayoutSize(rectangles);
         

@@ -5,10 +5,9 @@ namespace TagsCloudVisualization;
 
 public class TagCloudVisualizer(int width, int height)
 {
-    private readonly SKBitmap bitmap = new(width, height);
-
     public SKBitmap Visualize(IEnumerable<SKRect> rectangles)
     {
+        var bitmap = new SKBitmap(width, height);
         var canvas = new SKCanvas(bitmap);
         var paint = new SKPaint 
         { 

@@ -1,5 +1,5 @@
 using FluentAssertions;
-using System.Drawing;
+using SkiaSharp;
 using TagsCloudVisualization;
 
 namespace TagsCloudVisualizationTests;
@@ -14,7 +14,7 @@ public class RandomExtensionTest
     [TestCase(0, 5, TestName = "MinValue is zero")] 
     [TestCase(-1, 10, TestName = "MinValue is negative")]
     [TestCase(50, 20, TestName = "MinValue is greater than MaxValue")]
-    public void NextSize_ShouldThrowArgumentOutOfRangeException_WithInvalidParams(int minValue, int maxValue)
+    public void NextSkSize_ShouldThrowArgumentOutOfRangeException_WithInvalidParams(int minValue, int maxValue)
     {
         Action act = () => random.NextSkSize(minValue, maxValue);
 
@@ -22,14 +22,14 @@ public class RandomExtensionTest
     }
 
     [Test]
-    public void NextSize_ShouldReturnExpectedNextSize()
+    public void NextSkSize_ShouldReturnExpectedNextSize()
     {
         var seed = random.Next();
         var testRandom = new Random(seed);
         var expectedRandom = new Random(seed);
 
         var actualSize = testRandom.NextSkSize(1, int.MaxValue);
-        var expectedSize = new Size(
+        var expectedSize = new SKSize(
             expectedRandom.Next(1, int.MaxValue),
             expectedRandom.Next(1, int.MaxValue));
         
@@ -37,20 +37,20 @@ public class RandomExtensionTest
     }
 
     [Test]
-    public void NextPoint_ShouldReturnPoint()
+    public void NextSkPoint_ShouldReturnPoint()
     {
-        random.NextSkPoint(int.MinValue, int.MaxValue).Should().BeOfType<Point>();
+        random.NextSkPoint(int.MinValue, int.MaxValue).Should().BeOfType<SKPoint>();
     }
 
     [Test]
-    public void NextPoint_ShouldReturnExpectedNextPoint()
+    public void NextSkPoint_ShouldReturnExpectedNextPoint()
     {
         var seed = random.Next();
         var pointRandomizer = new Random(seed);
         var expectedRandomizer = new Random(seed);
         
         var actualPoint = pointRandomizer.NextSkPoint(int.MinValue, int.MaxValue);
-        var expectedPoint = new Point(
+        var expectedPoint = new SKPoint(
             expectedRandomizer.Next(int.MinValue, int.MaxValue),
             expectedRandomizer.Next(int.MinValue, int.MaxValue));
         

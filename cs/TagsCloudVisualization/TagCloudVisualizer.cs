@@ -11,9 +11,11 @@ public class TagCloudVisualizer(int width, int height)
         var canvas = new SKCanvas(bitmap);
         var paint = new SKPaint 
         { 
-            Color = SKColors.White,
+            Color = SKColors.Black,
             Style = SKPaintStyle.Stroke
         };
+        
+        canvas.Clear(SKColors.White);
         
         foreach (var rectangle in rectangles)
             canvas.DrawRect(rectangle, paint);

@@ -28,11 +28,10 @@ public class CircularCloudLayouterTest
         var visualizer = new TagCloudVisualizer((int)layoutSize.Width / 2, (int)layoutSize.Height / 2);
         var bitmap = visualizer.Visualize(circularCloudLayouter.Rectangles);
 
-        var saver = new Saver(ImagesDirectory);
-        var filename = $"{currentContext.Test.Name}.png";
-        saver.SaveAsPng(bitmap, filename);
+        var pathToFile = Path.Combine(ImagesDirectory, currentContext.Test.Name);
+        TagCloudSaver.SaveAsPng(bitmap, pathToFile);
         
-        TestContext.Out.WriteLine($"Tag cloud visualization saved to file {Path.Combine(ImagesDirectory, filename)}");
+        TestContext.Out.WriteLine($"Tag cloud visualization saved to file {pathToFile}");
     }
 
     [Test]

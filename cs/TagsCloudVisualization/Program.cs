@@ -24,7 +24,6 @@ class Program
         var visualizer = new TagCloudVisualizer(ImageWidth, ImageHeight);
         var bitmap = visualizer.Visualize(rectangles);
 
-        var saver = new Saver(ImageDirectory);
-        saver.SaveAsPng(bitmap, $"{NumberOfRectangles}_TagCloud.png");
+        TagCloudSaver.SaveAsPng(bitmap, Path.Combine(ImageDirectory,$"{NumberOfRectangles}_TagCloud"));
     }
 }

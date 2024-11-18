@@ -1,4 +1,4 @@
-using System.Drawing;
+using SkiaSharp;
 using FluentAssertions;
 using TagsCloudVisualization;
 
@@ -18,7 +18,7 @@ public class SpiralPointsGeneratorTest
     public void SpiralPointsGenerator_ShouldThrowArgumentException_WithInvalidParams(double radius,
         double angleOffset, string msg)
     {
-        var start = new Point(0, 0);
+        var start = new SKPoint(0, 0);
         Action act = () => new SpiralPointsGenerator(start, radius, angleOffset);
 
         act.Should().Throw<ArgumentException>().WithMessage(msg);
@@ -27,8 +27,8 @@ public class SpiralPointsGeneratorTest
     [Test]
     public void SpiralPointsGenerator_ShouldReturnExactListOfFiveFirstPoints_WithSpecialParams()
     {
-        var spiralPointsGenerator = new SpiralPointsGenerator(new Point(0, 0), 2, 360);
-        var expectedListOfPoints = new List<Point>
+        var spiralPointsGenerator = new SpiralPointsGenerator(new SKPoint(0, 0), 2, 360);
+        var expectedListOfPoints = new List<SKPoint>
                 {
                     new(0, 0), new(2, 0), new(4, 0), new(6, 0), new(8, 0)
                 };

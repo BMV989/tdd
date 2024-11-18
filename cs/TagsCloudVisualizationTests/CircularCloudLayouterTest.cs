@@ -1,6 +1,6 @@
-using System.Drawing;
 using FluentAssertions;
 using NUnit.Framework.Interfaces;
+using SkiaSharp;
 using TagsCloudVisualization;
 
 namespace TagsCloudVisualizationTests;
@@ -16,7 +16,7 @@ public class CircularCloudLayouterTest
     [SetUp]
     public void Setup()
     {
-        circularCloudLayouter = new CircularCloudLayouter(randomizer.NextPoint(-10, 10));
+        circularCloudLayouter = new CircularCloudLayouter(randomizer.NextSkPoint(-10, 10));
     }
 
     [TearDown]
@@ -26,7 +26,7 @@ public class CircularCloudLayouterTest
         if (currentContext.Result.Outcome.Status != TestStatus.Failed) return;
 
         var layoutSize = GetLayoutSize(circularCloudLayouter.Rectangles.ToList());
-        var visualizer = new TagCloudVisualizer(layoutSize.Width, layoutSize.Height);
+        var visualizer = new TagCloudVisualizer((int)layoutSize.Width, (int)layoutSize.Height);
         var bitmap = visualizer.Visualize(circularCloudLayouter.Rectangles);
 
         var saver = new Saver(ImagesDirectory);
@@ -36,23 +36,14 @@ public class CircularCloudLayouterTest
         TestContext.Out.WriteLine($"Tag cloud visualization saved to file {Path.Combine(ImagesDirectory, filename)}");
     }
 
-    [Test]
-    public void PutNextRectangle_ShouldReturnRectangle()
-    {
-        var rectSize = randomizer.NextSize(1, int.MaxValue);
-        
-        var rect = circularCloudLayouter.PutNextRectangle(rectSize);
-
-        rect.Should().BeOfType<Rectangle>();
-    }
 
     [Test]
     public void PutNextRectangle_ShouldReturnRectangleAtCenter_WhenFirstInvoked()
     {
-        var rectSize = randomizer.NextSize(1, int.MaxValue);
+        var rectSize = randomizer.NextSkSize(1, int.MaxValue);
         
         var actualRect = circularCloudLayouter.PutNextRectangle(rectSize);
-        var expectedRect = CircularCloudLayouter.CreateRectangle(circularCloudLayouter.Center, rectSize);
+        var expectedRect = CircularCloudLayouter.CreateRectangleWithCenter(circularCloudLayouter.Center, rectSize);
         
         actualRect.Should().BeEquivalentTo(expectedRect);
     }
@@ -60,7 +51,7 @@ public class CircularCloudLayouterTest
     [Test]
     public void PutNextRectangle_ShouldReturnRectangle_WithCorrectSize()
     {
-        var recSize = randomizer.NextSize(1, int.MaxValue);
+        var recSize = randomizer.NextSkSize(1, int.MaxValue);
         
         var actualRect = circularCloudLayouter.PutNextRectangle(recSize);
         
@@ -74,7 +65,7 @@ public class CircularCloudLayouterTest
         
         var rectangles = Enumerable
             .Range(0, numberOfRectangles)
-            .Select(_ => circularCloudLayouter.PutNextRectangle(randomizer.NextSize(10, 27)))
+            .Select(_ => circularCloudLayouter.PutNextRectangle(randomizer.NextSkSize(10, 27)))
             .ToList();
         
         rectangles.Any(fr => rectangles.Any(sr => fr != sr && fr.IntersectsWith(sr)))
@@ -98,17 +89,17 @@ public class CircularCloudLayouterTest
         areaRatio.Should().BeApproximately(1, eps);
     }
     
-    private List<Rectangle> PutRandomRectanglesInLayouter(int numberOfRectangles) =>
+    private List<SKRect> PutRandomRectanglesInLayouter(int numberOfRectangles) =>
         Enumerable
             .Range(0, numberOfRectangles)
-            .Select(_ => circularCloudLayouter.PutNextRectangle(randomizer.NextSize(10, 27)))
+            .Select(_ => circularCloudLayouter.PutNextRectangle(randomizer.NextSkSize(10, 27)))
             .ToList();
 
-    private Size GetLayoutSize(List<Rectangle> rectangles)
+    private SKSize GetLayoutSize(List<SKRect> rectangles)
     {
         var layoutWidth = rectangles.Max(r => r.Right) - rectangles.Min(r => r.Left);
         var layoutHeight = rectangles.Max(r => r.Top) - rectangles.Min(r => r.Bottom);
         
-        return new Size(layoutWidth, layoutHeight);
+        return new SKSize(layoutWidth, layoutHeight);
     }
 }

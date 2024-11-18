@@ -16,7 +16,7 @@ public class RandomExtensionTest
     [TestCase(50, 20, TestName = "MinValue is greater than MaxValue")]
     public void NextSize_ShouldThrowArgumentOutOfRangeException_WithInvalidParams(int minValue, int maxValue)
     {
-        Action act = () => random.NextSize(minValue, maxValue);
+        Action act = () => random.NextSkSize(minValue, maxValue);
 
         act.Should().Throw<ArgumentOutOfRangeException>();
     }
@@ -28,7 +28,7 @@ public class RandomExtensionTest
         var testRandom = new Random(seed);
         var expectedRandom = new Random(seed);
 
-        var actualSize = testRandom.NextSize(1, int.MaxValue);
+        var actualSize = testRandom.NextSkSize(1, int.MaxValue);
         var expectedSize = new Size(
             expectedRandom.Next(1, int.MaxValue),
             expectedRandom.Next(1, int.MaxValue));
@@ -39,7 +39,7 @@ public class RandomExtensionTest
     [Test]
     public void NextPoint_ShouldReturnPoint()
     {
-        random.NextPoint(int.MinValue, int.MaxValue).Should().BeOfType<Point>();
+        random.NextSkPoint(int.MinValue, int.MaxValue).Should().BeOfType<Point>();
     }
 
     [Test]
@@ -49,7 +49,7 @@ public class RandomExtensionTest
         var pointRandomizer = new Random(seed);
         var expectedRandomizer = new Random(seed);
         
-        var actualPoint = pointRandomizer.NextPoint(int.MinValue, int.MaxValue);
+        var actualPoint = pointRandomizer.NextSkPoint(int.MinValue, int.MaxValue);
         var expectedPoint = new Point(
             expectedRandomizer.Next(int.MinValue, int.MaxValue),
             expectedRandomizer.Next(int.MinValue, int.MaxValue));

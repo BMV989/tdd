@@ -1,8 +1,8 @@
-using System.Drawing;
+using SkiaSharp;
 
 namespace TagsCloudVisualization;
 
 public interface ICloudLayouter
 {
-    public Rectangle PutNextRectangle(Size rectangleSize);
+    public SKRect PutNextRectangle(SKSize rectangleSize);
 }

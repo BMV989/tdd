@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using SkiaSharp;
 
 namespace TagsCloudVisualization;
 
@@ -7,25 +7,25 @@ public class CircularCloudLayouter : ICloudLayouter
     private const double OptimalRadius = 1d;
     private const double OptimalAngleOffset = 0.5;
     
-    private readonly List<Rectangle> rectangles = new();
+    private readonly List<SKRect> rectangles = new();
     private readonly SpiralPointsGenerator pointsGenerator;
-    private readonly Point center;
+    private readonly SKPoint center;
     
-    public Point Center => center;
-    public IEnumerable<Rectangle> Rectangles => rectangles;
+    public SKPoint Center => center;
+    public IEnumerable<SKRect> Rectangles => rectangles;
     
-    public CircularCloudLayouter(Point center)
+    public CircularCloudLayouter(SKPoint center)
     {
        this.center = center;
        pointsGenerator = new SpiralPointsGenerator(center, OptimalRadius, OptimalAngleOffset);
     }
     
-    public Rectangle PutNextRectangle(Size rectangleSize)
+    public SKRect PutNextRectangle(SKSize rectangleSize)
     {
         while (true)
         {
             var rectanglePosition = pointsGenerator.GetNextPoint();
-            var rectangle = CreateRectangle(rectanglePosition, rectangleSize);
+            var rectangle = CreateRectangleWithCenter(rectanglePosition, rectangleSize);
 
             if (rectangles.Any(rectangle.IntersectsWith)) continue;
             
@@ -35,12 +35,13 @@ public class CircularCloudLayouter : ICloudLayouter
         }
     }
 
-    public static Rectangle CreateRectangle(Point center, Size rectangleSize) =>
-        new(
-            center.X - rectangleSize.Width / 2,
-            center.Y - rectangleSize.Height / 2,
-            rectangleSize.Width,
-            rectangleSize.Height
-        );
+    public static SKRect CreateRectangleWithCenter(SKPoint center, SKSize rectangleSize)
+    {
+        var left = center.X - rectangleSize.Width / 2;
+        var top = center.Y - rectangleSize.Height / 2;
+        
+        return new SKRect(left, top, left + rectangleSize.Width, top + rectangleSize.Height);
+        
+    }
 }
 

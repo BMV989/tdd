@@ -1,8 +1,8 @@
-using System.Drawing;
+using SkiaSharp;
 
 namespace TagsCloudVisualization;
 
 public interface IPointsGenerator
 {
-    public Point GetNextPoint();
+    public SKPoint GetNextPoint();
 }

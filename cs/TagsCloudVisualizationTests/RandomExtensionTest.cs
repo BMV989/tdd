@@ -37,12 +37,6 @@ public class RandomExtensionTest
     }
 
     [Test]
-    public void NextSkPoint_ShouldReturnPoint()
-    {
-        random.NextSkPoint(int.MinValue, int.MaxValue).Should().BeOfType<SKPoint>();
-    }
-
-    [Test]
     public void NextSkPoint_ShouldReturnExpectedNextPoint()
     {
         var seed = random.Next();

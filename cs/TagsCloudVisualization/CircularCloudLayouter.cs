@@ -28,7 +28,7 @@ public class CircularCloudLayouter(SKPoint center) : ICloudLayouter
         }
     }
 
-    public static SKRect CreateRectangleWithCenter(SKPoint center, SKSize rectangleSize)
+    private static SKRect CreateRectangleWithCenter(SKPoint center, SKSize rectangleSize)
     {
         var left = center.X - rectangleSize.Width / 2;
         var top = center.Y - rectangleSize.Height / 2;

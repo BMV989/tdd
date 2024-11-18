@@ -41,7 +41,12 @@ public class CircularCloudLayouterTest
         var rectSize = Random.Shared.NextSkSize(1, int.MaxValue);
         
         var actualRect = circularCloudLayouter.PutNextRectangle(rectSize);
-        var expectedRect = CircularCloudLayouter.CreateRectangleWithCenter(circularCloudLayouter.Center, rectSize);
+        
+        var expectedRect = new SKRect(
+            circularCloudLayouter.Center.X - rectSize.Width / 2,
+                circularCloudLayouter.Center.Y - rectSize.Height / 2,
+            circularCloudLayouter.Center.X + rectSize.Width / 2, 
+            circularCloudLayouter.Center.Y + rectSize.Height / 2);
         
         actualRect.Should().BeEquivalentTo(expectedRect);
     }

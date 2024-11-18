@@ -16,8 +16,7 @@ public class CircularCloudLayouterTest
     [SetUp]
     public void Setup()
     {
-        circularCloudLayouter = TestContext.CurrentContext.Test.Name.Contains("Optimal") ? 
-            CreateCircularCloudLayouterWithOptimalParams() : CreateCircularCloudLayouterWithRandomParams();
+        circularCloudLayouter = new CircularCloudLayouter(randomizer.NextPoint(-10, 10));
     }
 
     [TearDown]
@@ -99,10 +98,6 @@ public class CircularCloudLayouterTest
         areaRatio.Should().BeApproximately(1, eps);
     }
     
-    private CircularCloudLayouter CreateCircularCloudLayouterWithOptimalParams() => new(new Point(0, 0));
-    private CircularCloudLayouter CreateCircularCloudLayouterWithRandomParams() => 
-        new(randomizer.NextPoint(-10, 10), randomizer.Next(1, 10), randomizer.Next(1, 10));
-
     private List<Rectangle> PutRandomRectanglesInLayouter(int numberOfRectangles) =>
         Enumerable
             .Range(0, numberOfRectangles)

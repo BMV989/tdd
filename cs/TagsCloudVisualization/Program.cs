@@ -19,7 +19,8 @@ class Program
         var rectangles = Enumerable
             .Range(0, NumberOfRectangles)
             .Select(_ => 
-                cloudLayouter.PutNextRectangle(Random.Shared.NextSkSize(MinRectangleSize, MaxRectangleSize)));
+                cloudLayouter.PutNextRectangle(Random.Shared.NextSkSize(MinRectangleSize, MaxRectangleSize)))
+            .ToList();
         
         var visualizer = new TagCloudVisualizer(ImageWidth, ImageHeight);
         var bitmap = visualizer.Visualize(rectangles);

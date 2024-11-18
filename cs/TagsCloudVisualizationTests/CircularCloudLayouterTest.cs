@@ -26,7 +26,7 @@ public class CircularCloudLayouterTest
 
         var layoutSize = GetLayoutSize(circularCloudLayouter.Rectangles.ToList());
         var visualizer = new TagCloudVisualizer((int)layoutSize.Width, (int)layoutSize.Height);
-        var bitmap = visualizer.Visualize(circularCloudLayouter.Rectangles);
+        var bitmap = visualizer.Visualize(circularCloudLayouter.Rectangles.ToList());
 
         var pathToFile = Path.Combine(ImagesDirectory, currentContext.Test.Name);
         TagCloudSaver.SaveAsPng(bitmap, pathToFile);

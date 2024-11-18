@@ -36,7 +36,6 @@ public class CircularCloudLayouterTest
         TestContext.Out.WriteLine($"Tag cloud visualization saved to file {Path.Combine(ImagesDirectory, filename)}");
     }
 
-
     [Test]
     public void PutNextRectangle_ShouldReturnRectangleAtCenter_WhenFirstInvoked()
     {
@@ -51,11 +50,11 @@ public class CircularCloudLayouterTest
     [Test]
     public void PutNextRectangle_ShouldReturnRectangle_WithCorrectSize()
     {
-        var recSize = randomizer.NextSkSize(1, int.MaxValue);
+        var rectangleSize = randomizer.NextSkSize(1, int.MaxValue);
         
-        var actualRect = circularCloudLayouter.PutNextRectangle(recSize);
+        var actualRectangle = circularCloudLayouter.PutNextRectangle(rectangleSize);
         
-        actualRect.Size.Should().Be(recSize);
+        actualRectangle.Size.Should().Be(rectangleSize);
     }
     
     [Test]
@@ -76,7 +75,7 @@ public class CircularCloudLayouterTest
     }
 
     [Test]
-    public void GeneratedLayout_ShouldHaveHighTightnessAndShapeOfCircularCloud_WithOptimalParams()
+    public void GeneratedLayout_ShouldHaveHighTightnessAndShapeOfCircularCloud()
     {
         const double eps = 0.35;
         var rectangles = PutRandomRectanglesInLayouter(randomizer.Next(500, 1000));

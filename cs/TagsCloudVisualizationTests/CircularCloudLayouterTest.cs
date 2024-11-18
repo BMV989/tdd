@@ -67,8 +67,11 @@ public class CircularCloudLayouterTest
             .Range(0, numberOfRectangles)
             .Select(_ => circularCloudLayouter.PutNextRectangle(randomizer.NextSkSize(10, 27)))
             .ToList();
-        
-        rectangles.Any(fr => rectangles.Any(sr => fr != sr && fr.IntersectsWith(sr)))
+
+        bool IsIntersectionBetweenRectangles(SKRect rect) => 
+                    rectangles.Any(otherRect => rect != otherRect && rect.IntersectsWith(otherRect));
+
+        rectangles.Any(IsIntersectionBetweenRectangles)
             .Should().BeFalse();
     }
 

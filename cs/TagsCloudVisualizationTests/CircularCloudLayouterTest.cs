@@ -15,7 +15,7 @@ public class CircularCloudLayouterTest
     [SetUp]
     public void Setup()
     {
-        circularCloudLayouter = new CircularCloudLayouter(Random.Shared.NextSkPoint(-10, 10));
+        circularCloudLayouter = new CircularCloudLayouter(new SKPoint(0, 0));
     }
 
     [TearDown]
@@ -25,7 +25,7 @@ public class CircularCloudLayouterTest
         if (currentContext.Result.Outcome.Status != TestStatus.Failed) return;
 
         var layoutSize = GetLayoutSize(circularCloudLayouter.Rectangles.ToList());
-        var visualizer = new TagCloudVisualizer((int)layoutSize.Width, (int)layoutSize.Height);
+        var visualizer = new TagCloudVisualizer((int)layoutSize.Width / 2, (int)layoutSize.Height / 2);
         var bitmap = visualizer.Visualize(circularCloudLayouter.Rectangles);
 
         var saver = new Saver(ImagesDirectory);
@@ -75,13 +75,13 @@ public class CircularCloudLayouterTest
                     rectangles.Any(otherRect => rect != otherRect && rect.IntersectsWith(otherRect));
 
         rectangles.Any(IsIntersectionBetweenRectangles)
-            .Should().BeFalse();
+            .Should().BeTrue();
     }
 
     [Test]
     public void GeneratedLayout_ShouldHaveHighTightnessAndShapeOfCircularCloud()
     {
-        const double eps = 0.35;
+        const double eps = 0.25;
         var rectangles = PutRandomRectanglesInLayouter(Random.Shared.Next(500, 1000));
         var layoutSize = GetLayoutSize(rectangles);
         
